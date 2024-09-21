@@ -1,37 +1,24 @@
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
 import express from 'express';
-import { MegaSenaSorteio } from './entities/MegaSenaSorteio';
+import { AppDataSource } from './database/dataSource';
+import megaSenaRoutes from './routes/megaSenaRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use('/api', megaSenaRoutes); // Prefixo para as rotas
 
-const AppDataSource = new DataSource({
-    type: 'mysql',
-    host: 'localhost',
-    port: 3307,
-    username: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-    synchronize: true,
-    logging: false,
-    entities: [
-      MegaSenaSorteio,
-    ],
-});
-  
 AppDataSource.initialize()
-  .then(() => {
-    console.log('Conectado ao banco de dados!');
+    .then(() => {
+        console.log('Conectado ao banco de dados!');
 
-    app.get('/', (req, res) => {
-      res.send('Bem-vindo ao Projeto Mega-Sena!');
-    });
+        app.get('/', (req, res) => {
+            res.send('Bem-vindo ao Projeto Mega-Sena!');
+        });
 
-    app.listen(PORT, () => {
-      console.log(`Servidor rodando na porta ${PORT}`);
-    });
-  })
-  .catch((error) => console.log('Erro ao conectar ao banco de dados:', error));
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`);
+        });
+    })
+    .catch((error) => console.log('Erro ao conectar ao banco de dados:', error));
