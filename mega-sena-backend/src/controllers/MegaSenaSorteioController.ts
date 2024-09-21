@@ -1,20 +1,22 @@
 import { Request, Response } from 'express';
-import { MegaSenaSorteioService } from '../services/MegaSenaSorteioService';
+import { CreateDrawService } from '../services/CreateDrawService';
 
-const megaSenaSorteioService = new MegaSenaSorteioService();
+const createDrawService = new CreateDrawService();
 
 export class MegaSenaSorteioController {
-    async getAll(req: Request, res: Response) {
+    async create(req: Request, res: Response) {
+        const { numeros, data_sorteio } = req.body;
+
         try {
-            const sorteios = await megaSenaSorteioService.findAll();
-            res.json(sorteios);
+            const draw = await createDrawService.criarSorteio(numeros, data_sorteio);
+
+            return res.status(201).json(draw);
         } catch (error) {
             if (error instanceof Error) {
-                res.status(500).json({ error: error.message });
+                return res.status(400).json({ error: error.message });
             } else {
-                res.status(500).json({ error: 'Erro desconhecido' });
+                return res.status(400).json({ error: 'Erro desconhecido' });
             }
         }
     }
-
 }
