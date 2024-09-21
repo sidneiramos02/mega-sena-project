@@ -1,0 +1,13 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3307,
+    "username": "root",
+    "password": "sua_senha", // substitua pela sua senha
+    "database": "nome_do_seu_banco", // substitua pelo nome do seu banco
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+      "src/entities/**/*.ts"
+    ]
+  }  
