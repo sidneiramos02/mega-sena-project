@@ -17,4 +17,8 @@ router.post(
     megaSenaSorteioController.create.bind(megaSenaSorteioController)
 );
 
+router.get(
+    '/count',
+    megaSenaSorteioController.countNumbers.bind(megaSenaSorteioController));
+
 export default router;
