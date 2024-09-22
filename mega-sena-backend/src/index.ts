@@ -2,10 +2,12 @@ import 'reflect-metadata';
 import express from 'express';
 import { AppDataSource } from './database/dataSource';
 import megaSenaRoutes from './routes/megaSenaRoutes';
+import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use('/api', megaSenaRoutes);
 
